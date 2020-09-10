@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  mqtt-server:
+    container_name: "mqtt-server"
+    image: node:latest
+    restart: always
+    working_dir: /app/src
+    volumes:
+      - .:/app/src
+    command: "bash -c 'npm install && node index.js'"
+    links:
+      - mongo-mqtt
+    ports:
+      - 9090:1884
+
+  mongo-mqtt:
+    container_name: "mongo-mqtt"
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27021:27017
